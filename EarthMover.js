@@ -51,16 +51,16 @@ var loadMapTerrainData = function()
 		console.log("EarthMover: Aborting load operation...");
 		return;
 	}
-	var numTiles = (map.size.x-2)*(map.size.y-2);
+	//var numTiles = (map.size.x-2)*(map.size.y-2); //deprecated
 	
 	//load the rest of the saved data
-    try
+    	try
 	{	
-	BaseHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.BaseHeightData'));
-	SlopeData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SlopeData'));
-	SurfaceStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SurfaceStyleData'));
-	EdgeStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.EdgeStyleData'));
-	WaterHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.WaterHeightData'));
+		BaseHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.BaseHeightData'));
+		SlopeData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SlopeData'));
+		SurfaceStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SurfaceStyleData'));
+		EdgeStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.EdgeStyleData'));
+		WaterHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.WaterHeightData'));
 	}
 	catch(err)
 	{
@@ -93,9 +93,9 @@ var loadMapTerrainData = function()
 					}
 					catch(err)
 					{
-					console.log("EarthMover: Error when applying saved terrain data to current map.");
-					console.log("EarthMover: Aborting load operation...");
-					return;
+						console.log("EarthMover: Error when applying saved terrain data to current map.");
+						console.log("EarthMover: Aborting load operation...");
+						return;
 					}
 				}
 			}
@@ -142,14 +142,14 @@ var saveMapTerrainData = function()
 	
 	try
 	{
-	context.sharedStorage.set('narhiril.EarthMover.MapSizeX', map.size.x-2);
-	context.sharedStorage.set('narhiril.EarthMover.MapSizeY', map.size.y-2);
-	context.sharedStorage.set('narhiril.EarthMover.BaseHeightData', JSON.stringify(BaseHeightData));
-	context.sharedStorage.set('narhiril.EarthMover.SlopeData', JSON.stringify(SlopeData));
-	context.sharedStorage.set('narhiril.EarthMover.SurfaceStyleData', JSON.stringify(SurfaceStyleData));
-	context.sharedStorage.set('narhiril.EarthMover.EdgeStyleData', JSON.stringify(EdgeStyleData));
-	context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(WaterHeightData));
-	console.log('EarthMover: Terrain data saved!');
+		context.sharedStorage.set('narhiril.EarthMover.MapSizeX', map.size.x-2);
+		context.sharedStorage.set('narhiril.EarthMover.MapSizeY', map.size.y-2);
+		context.sharedStorage.set('narhiril.EarthMover.BaseHeightData', JSON.stringify(BaseHeightData));
+		context.sharedStorage.set('narhiril.EarthMover.SlopeData', JSON.stringify(SlopeData));
+		context.sharedStorage.set('narhiril.EarthMover.SurfaceStyleData', JSON.stringify(SurfaceStyleData));
+		context.sharedStorage.set('narhiril.EarthMover.EdgeStyleData', JSON.stringify(EdgeStyleData));
+		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(WaterHeightData));
+		console.log('EarthMover: Terrain data saved!');
 		try
 		{
 			park.postMessage('EarthMover: Terrain successfully saved!');
@@ -204,8 +204,8 @@ const earthMoverWindow = function()
 	}
 	try
 	{
-	ui.openWindow(
-	{
+		ui.openWindow(
+		{
 		classification: 'EarthMover',
 		width: 410,
 		height: 80,
