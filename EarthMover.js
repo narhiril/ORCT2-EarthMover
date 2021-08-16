@@ -1,13 +1,16 @@
 //A really basic script that can load/save map terrain data to copy across maps.  Maps must be identical in size.
 
 const verbose = true;
-const version = 0.4;
+const version = 0.5;
 
 var BaseHeightData = new Array();
 var SlopeData = new Array();
 var SurfaceStyleData = new Array();
 var EdgeStyleData = new Array();
 var WaterHeightData = new Array();
+var BaseZData = new Array();
+var ClearanceHeightData = new Array();
+var ClearanceZData = new Array();
 
 var terrainArraySetup = function()
 {
@@ -16,6 +19,9 @@ var terrainArraySetup = function()
 	SurfaceStyleData = new Array();
 	EdgeStyleData = new Array();
 	WaterHeightData = new Array();
+	BaseZData = new Array();
+	ClearanceHeightData = new Array();
+	ClearanceZData = new Array();
 }
 
 var initializeEarthMover = function()
@@ -61,6 +67,9 @@ var loadMapTerrainData = function()
 		SurfaceStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SurfaceStyleData'));
 		EdgeStyleData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.EdgeStyleData'));
 		WaterHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.WaterHeightData'));
+		BaseZData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.BaseZData'));
+		ClearanceHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.ClearanceHeightData'));
+		ClearanceZData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.ClearanceZData'));
 	}
 	catch(err)
 	{
@@ -135,6 +144,9 @@ var saveMapTerrainData = function()
 					SurfaceStyleData.push(element.surfaceStyle);
 					EdgeStyleData.push(element.edgeStyle);
 					WaterHeightData.push(element.waterHeight);
+					BaseZData.push(element.baseZ);
+					ClearanceHeightData.push(element.clearanceHeight);
+					ClearanceZData.push(element.clearanceZ);
 				}
 			}
 		}
@@ -149,6 +161,9 @@ var saveMapTerrainData = function()
 		context.sharedStorage.set('narhiril.EarthMover.SurfaceStyleData', JSON.stringify(SurfaceStyleData));
 		context.sharedStorage.set('narhiril.EarthMover.EdgeStyleData', JSON.stringify(EdgeStyleData));
 		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(WaterHeightData));
+		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(BaseZData));
+		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(ClearanceHeightData));
+		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(ClearanceZData));
 		console.log('EarthMover: Terrain data saved!');
 		try
 		{
@@ -178,6 +193,9 @@ var clearMapTerrainData = function()
 	context.sharedStorage.set('narhiril.EarthMover.SurfaceStyleData', 0);
 	context.sharedStorage.set('narhiril.EarthMover.EdgeStyleData', 0);
 	context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', 0);
+	context.sharedStorage.set('narhiril.EarthMover.BaseZData', 0);
+	context.sharedStorage.set('narhiril.EarthMover.ClearanceHeightData', 0);
+	context.sharedStorage.set('narhiril.EarthMover.ClearanceZData', 0);
 	console.log('EarthMover: Saved data cleared!');
 	if (verbose)
 	{
