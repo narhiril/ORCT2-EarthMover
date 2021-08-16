@@ -262,7 +262,7 @@ var main = function()
 registerPlugin
 ({
     name: 'EarthMover',
-	version: JSON.stringify(version),
+    version: JSON.stringify(version),
     authors: ['narhiril'],
     type: 'local',
     licence: 'MIT',
