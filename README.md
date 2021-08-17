@@ -4,7 +4,7 @@
 
 Very barebones OpenRCT2 plugin for copying/pasting terrain between different maps.  Maps must be identical size.  This plugin adds a window with three buttons - copy, paste, clear.
 
-The intended use for this plugin is to take surface element data (terrain height, slope, water height, etc.) from one map and copy it to another map. You might wish to do this if, say, you want to import terrain from an existing map to a workbench of your choice, rather than trying to build the terrain  on the workbench itself or mucking about in the object selection screen for the next several hours.
+The intended use for this plugin is to take surface element data (terrain height, slope, water height, etc.) from one map and copy it to another map. You might wish to do this if, say, you want to import terrain from an existing map to a workbench of your choice.
 
 There are a few properties of surface elements that EarthMover does not copy - namely, grass length, land ownership data, and park fences.  There's no technical reason why it can't, but I thought that for the most common usages of this plugin, it would actually be advantageous not to save these.
 
