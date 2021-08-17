@@ -1,7 +1,7 @@
 //A really basic script that can load/save map terrain data to copy across maps.  Maps must be identical in size.
 
 const verbose = true;
-const version = 0.6;
+const version = 0.61;
 
 var BaseHeightData = new Array();
 var SlopeData = new Array();
@@ -36,7 +36,10 @@ var initializeEarthMover = function()
 	{
 		context.sharedStorage.set('narhiril.EarthMover.MapSizeY', 0);
 	}
-	console.log("EarthMover: Plugin initialized");
+	if (verbose)
+	{
+		console.log("EarthMover: Plugin initialized!");
+	}
 }
 
 
@@ -47,7 +50,18 @@ var loadMapTerrainData = function()
 	var y = context.sharedStorage.get('narhiril.EarthMover.MapSizeY');
 	if (y == 0 || x == 0)
 	{
-		console.log("EarthMover: Error, no saved terrain data!  Aborting load operation...");
+		console.log("EarthMover: Error, no saved terrain data!  Aborting load operation...");		
+		try
+		{
+			park.postMessage('EarthMover: No saved terrain data!');
+		}
+		catch(err)
+		{
+		if (verbose)
+			{
+			console.log('EarthMover: Error when writing a park message about an error caused by no saved data.   Not an error message I am all that proud of, honestly.');
+			}
+		}
 		return;
 	}
 	if (map.size.x-2 != x || map.size.y-2 != y)
@@ -55,12 +69,23 @@ var loadMapTerrainData = function()
 		console.log("EarthMover: Error, mismatch in current map size and size of saved terrain data.");
 		console.log("EarthMover: The saved terrain data is " + (x) + " tiles by " + (y) + " tiles.");
 		console.log("EarthMover: Aborting load operation...");
+		try
+		{
+			park.postMessage('EarthMover: Map size needs to match that of saved data.  Saved terrain data is ' + (x) + ' by ' + (y) + '.');
+		}
+		catch(err)
+		{
+		if (verbose)
+			{
+			console.log('EarthMover: Error when writing a park message about a load error.  Ironic.');
+			}
+		}
 		return;
 	}
 	//var numTiles = (map.size.x-2)*(map.size.y-2); //deprecated
 	
 	//load the rest of the saved data
-    try
+	try
 	{	
 		BaseHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.BaseHeightData'));
 		SlopeData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SlopeData'));
@@ -75,10 +100,6 @@ var loadMapTerrainData = function()
 	{
 		console.log("EarthMover: Welp, something broke!  Couldn't load saved terrain data.");
 		console.log("EarthMover: Aborting load operation...");
-		if (verbose)
-		{
-			console.log(err);
-		}
 		return;
 	}
 	
@@ -204,18 +225,18 @@ var clearMapTerrainData = function()
 	context.sharedStorage.set('narhiril.EarthMover.ClearanceHeightData', 0);
 	context.sharedStorage.set('narhiril.EarthMover.ClearanceZData', 0);
 	console.log('EarthMover: Saved data cleared!');
-	if (verbose)
-	{
 		try
 		{
 			park.postMessage('EarthMover: Cleared saved terrain data!');
 		}
 		catch(err)
 		{
+			if (verbose)
+			{
 			console.log('EarthMover: Error writing clear data success park message');
+			}
 		}
 		
-	}
 }
 
 
@@ -262,7 +283,7 @@ const earthMoverWindow = function()
 			y: 20,
 			height: 40,
 			width: 120,
-			text: 'Clear Stored Data',
+			text: 'Clear Stored Terrain',
 			isPressed: false,
 			onClick: clearMapTerrainData
 		}
