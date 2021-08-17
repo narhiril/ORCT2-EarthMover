@@ -1,7 +1,7 @@
 //A really basic script that can load/save map terrain data to copy across maps.  Maps must be identical in size.
 
 const verbose = true;
-const version = 0.5;
+const version = 0.6;
 
 var BaseHeightData = new Array();
 var SlopeData = new Array();
@@ -60,7 +60,7 @@ var loadMapTerrainData = function()
 	//var numTiles = (map.size.x-2)*(map.size.y-2); //deprecated
 	
 	//load the rest of the saved data
-    	try
+    try
 	{	
 		BaseHeightData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.BaseHeightData'));
 		SlopeData = JSON.parse(context.sharedStorage.get('narhiril.EarthMover.SlopeData'));
@@ -75,6 +75,10 @@ var loadMapTerrainData = function()
 	{
 		console.log("EarthMover: Welp, something broke!  Couldn't load saved terrain data.");
 		console.log("EarthMover: Aborting load operation...");
+		if (verbose)
+		{
+			console.log(err);
+		}
 		return;
 	}
 	
@@ -98,6 +102,9 @@ var loadMapTerrainData = function()
 						element.surfaceStyle = SurfaceStyleData[index];
 						element.edgeStyle = EdgeStyleData[index];
 						element.waterHeight = WaterHeightData[index];
+						element.baseZ = BaseZData[index];
+						element.clearanceHeight = ClearanceHeightData[index];
+						element.clearanceZ = ClearanceZData[index];
 						index++;
 					}
 					catch(err)
@@ -161,9 +168,9 @@ var saveMapTerrainData = function()
 		context.sharedStorage.set('narhiril.EarthMover.SurfaceStyleData', JSON.stringify(SurfaceStyleData));
 		context.sharedStorage.set('narhiril.EarthMover.EdgeStyleData', JSON.stringify(EdgeStyleData));
 		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(WaterHeightData));
-		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(BaseZData));
-		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(ClearanceHeightData));
-		context.sharedStorage.set('narhiril.EarthMover.WaterHeightData', JSON.stringify(ClearanceZData));
+		context.sharedStorage.set('narhiril.EarthMover.BaseZData', JSON.stringify(BaseZData));
+		context.sharedStorage.set('narhiril.EarthMover.ClearanceHeightData', JSON.stringify(ClearanceHeightData));
+		context.sharedStorage.set('narhiril.EarthMover.ClearanceZData', JSON.stringify(ClearanceZData));
 		console.log('EarthMover: Terrain data saved!');
 		try
 		{
