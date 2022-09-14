@@ -1,4 +1,4 @@
-// <reference path="C:\Users\Velvet\Documents\OpenRCT2\bin\openrct2.d.ts" />
+/// <reference path="C:\Users\Velvet\Documents\OpenRCT2\bin\openrct2.d.ts" />
 
 //EarthMover by narhiril
 //a script for saving/loading terrain data between maps of identical size
@@ -101,17 +101,26 @@ let loadMapTerrainData = function() {
             if (verbose) {
                 console.log("EarthMover: Saved terrain data found, loading...");
             }
-            //danger zone
-            removeExistingSurfaceElements();
             for (const tileData of surfaceTileArray) {
+				type TileKey = keyof typeof tileData;
+				let xCoord = 'x' as TileKey;
+				let yCoord = 'y' as TileKey;
                 //these coords are already corrected
-                const tile = map.getTile(tileData[x], tileData[y]);
-                const newSurface = <SurfaceElement>tile.insertElement(0);
-                for (const field in tileData) {
-                    if (field !== "x" && field !== "y") {
-                        newSurface[field] = tileData[field];
-                    }
-                }
+                const tile = map.getTile(tileData[xCoord], tileData[yCoord]);
+				for (let elementIndex = 0; elementIndex < tile.numElements; elementIndex++) {
+					const el = tile.getElement(elementIndex);
+					if (el.type === 'surface') {
+						if (verbose) {
+							console.log(`Loading data for saved surface element at coordinates (${tileData[xCoord]}, ${tileData[yCoord]})...`);
+						}
+						for (const field in tileData) {
+							let fieldKey = field as TileKey;
+							if (fieldKey !== xCoord && fieldKey !== yCoord) {
+								el[fieldKey] = tileData[fieldKey];
+							}
+						}
+					}
+				}
             }
         } 
         else {
@@ -138,24 +147,6 @@ let loadMapTerrainData = function() {
 		}
 	}
 
-}
-
-let removeExistingSurfaceElements = function() {
-    //loop through all map tiles
-	for (let k = 0; k < (map.size.x-2); k++)
-	{
-		for (let l = 0; l < (map.size.y-2); l++)
-		{
-			const currentTile = map.getTile(k+1, l+1);
-            for (let m = 0; m < currentTile.numElements; m++)
-            {
-                const tElement = currentTile.getElement(m);
-                if (tElement.type === 'surface') {
-                    currentTile.removeElement(m);
-                }
-            }
-        }
-    }
 }
 
 let saveMapTerrainData = function() {
