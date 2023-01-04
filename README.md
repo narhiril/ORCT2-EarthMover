@@ -1,6 +1,6 @@
 # ORCT2-EarthMover
 
-©2021 by narhiril (Velvet), distributed under MIT license.
+©2021 by narhiril, distributed under MIT license.
 
 Very barebones OpenRCT2 plugin for copying/pasting terrain between different maps.  Maps must be identical size.  This plugin adds a window with three buttons - copy, paste, clear.
 
@@ -14,4 +14,4 @@ This probably goes without saying, but if you use this plugin to import terrain 
 
 Tested on a 150x150 map without obvious issues, but might see a lag spike during save/load on extremely large maps as the arrays used in the script get quite large.
 
-As of v0.6, this should work properly, please report any issues.  I'm going to see if I can clean it up a bit and call it 1.0.
+As of v0.6, this should work properly, please report any issues.  Maybe someday I'll get around to completely rewriting it in TypeScript and calling it 1.0.
