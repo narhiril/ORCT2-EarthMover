@@ -2,6 +2,8 @@
 
 ©2021 by narhiril, distributed under MIT license.
 
+![](https://github.com/narhiril/ORCT2-EarthMover/blob/main/moveterraindemo.gif)
+
 Very barebones OpenRCT2 plugin for copying/pasting terrain between different maps.  Maps must be identical size.  This plugin adds a window with three buttons - copy, paste, clear.
 
 The intended use for this plugin is to take surface element data (terrain height, slope, water height, etc.) from one map and copy it to another map. You might wish to do this if, say, you want to import terrain from an existing map to a workbench of your choice.
